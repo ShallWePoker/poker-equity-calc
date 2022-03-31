@@ -23,7 +23,6 @@ func main() {
 	hand := models.Hand{}
 	for _, card := range tCards {
 		hand = append(hand, card)
-
 	}
 	fmt.Printf("cards: %s\n", hand.ToString())
 	fmt.Printf("[Seven2fiveV1] the biggest hand is %s\n", utils.Seven2five(tCards).BoardCards().ToString())

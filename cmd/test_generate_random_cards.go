@@ -21,7 +21,9 @@ func main() {
 			panic(err)
 		}
 		fmt.Printf("cards: %s\n", models.Hand(cards).ToString())
+		fmt.Println()
 		biggestMadeHand := utils.Seven2five(cards)
 		fmt.Printf("the biggest hand is %s\n", biggestMadeHand.BoardCards().ToString())
+		fmt.Println()
 	}
 }
