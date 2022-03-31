@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"github.com/ShallWePoker/poker-equity-calc/internal/models"
 )
 
@@ -38,7 +39,11 @@ func elementIn(elem int, bound []int) bool {
 
 func FindBiggestMadeHand(MadeHandList []models.MadeHand) models.MadeHand {
 	max := MadeHandList[0]
+	for _, v := range MadeHandList {
+		fmt.Printf("%s : %s\n", v.BoardCards().ToString(), v.Category())
+	}
 	for i := 1; i < len(MadeHandList); i++ {
+
 		if MadeHandList[i].IsGreaterThan(max) {
 			max = MadeHandList[i]
 		}
