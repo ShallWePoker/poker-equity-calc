@@ -6,24 +6,37 @@ import (
 
 func Seven2five(rawCards []models.Card) models.MadeHand {
 	var MadeHandList []models.MadeHand
-	for i := 0; i < 5; i++ {
-		for j := i + 1; j < 6; j++ {
-			var cards []models.Card
-			cards = append(rawCards[:i], rawCards[i+1:j]...)
-			cards = append(cards, rawCards[j+1:]...)
-			hand, err := models.InitHand(cards)
-			if err != nil {
-				panic(err)
-			}
-			// fmt.Println(hand.ToString())
-			madeHand := hand.Categorize()
-			MadeHandList = append(MadeHandList, madeHand)
+	removed2CardsIndicesList := make([][]int, 0)
+	for i := 0; i < 6; i++ {
+		for j := i + 1; j < 7; j++ {
+			pair := []int{i,j}
+			removed2CardsIndicesList = append(removed2CardsIndicesList, pair)
 		}
 	}
-	return findMax(MadeHandList)
+	for _, removed2CardsIndices := range removed2CardsIndicesList {
+		cards := make([]models.Card, 0)
+		for i, card := range rawCards {
+			if !elementIn(i,removed2CardsIndices) {
+				cards = append(cards, card)
+			}
+		}
+		hand, _ := models.InitHand(cards)
+		madeHand := hand.Categorize()
+		MadeHandList = append(MadeHandList, madeHand)
+	}
+	return FindBiggestMadeHand(MadeHandList)
 }
 
-func findMax(MadeHandList []models.MadeHand) models.MadeHand {
+func elementIn(elem int, bound []int) bool {
+	for _, i := range bound {
+		if elem == i {
+			return true
+		}
+	}
+	return false
+}
+
+func FindBiggestMadeHand(MadeHandList []models.MadeHand) models.MadeHand {
 	max := MadeHandList[0]
 	for i := 1; i < len(MadeHandList); i++ {
 		if MadeHandList[i].IsGreaterThan(max) {

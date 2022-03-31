@@ -36,14 +36,19 @@ func main() {
 		{
 			Title: "3",
 			Suit:  "♣",
-			Rank:  2,
+			Rank:  3,
 		},
 		{
 			Title: "4",
 			Suit:  "♣",
-			Rank:  2,
+			Rank:  4,
 		},
 	}
+	hand := models.Hand{}
+	for _, card := range cards1 {
+		hand = append(hand, card)
+	}
+	fmt.Printf("cards: %s\n", hand.ToString())
 	hand1 := utils.Seven2five(cards1)
-	fmt.Println(hand1.ToString())
+	fmt.Printf("the biggest hand is %s\n", hand1.BoardCards().ToString())
 }
