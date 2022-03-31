@@ -12,7 +12,7 @@ type Hand []Card
 func InitHand(cards []Card) (Hand, error) {
 	hand := make([]Card, 5)
 	err := checkHandLength(cards)
-	if  err != nil {
+	if err != nil {
 		return hand, err
 	}
 	copy(hand, cards)
@@ -30,7 +30,7 @@ func checkHandLength(hand []Card) error {
 func (hand Hand) ToString() string {
 	title := ""
 	for _, card := range hand {
-		title = title+card.Title+card.Suit+" "
+		title = title + card.Title + card.Suit + " "
 	}
 	return strings.TrimSuffix(title, " ")
 }
@@ -38,7 +38,7 @@ func (hand Hand) ToString() string {
 func (hand Hand) ToRankString() string {
 	title := ""
 	for _, card := range hand {
-		title = title+card.Title
+		title = title + card.Title
 	}
 	return title
 }
@@ -47,7 +47,7 @@ func sortHandByRank(hand Hand) {
 	for i := 1; i < len(hand); i++ {
 		tmp := hand[i]
 		k := i
-		for ; (k > 0) && tmp.Rank < hand[k-1].Rank; {
+		for (k > 0) && tmp.Rank < hand[k-1].Rank {
 			hand[k] = hand[k-1]
 			k = k - 1
 		}
@@ -57,7 +57,7 @@ func sortHandByRank(hand Hand) {
 
 func (hand Hand) IsFlush() bool {
 	firstSuit := hand[0].Suit
-	for _, card := range hand[1:len(hand)-1] {
+	for _, card := range hand[1:len(hand)] {
 		if card.Suit != firstSuit {
 			return false
 		}
@@ -80,7 +80,7 @@ func (hand Hand) IsFourOfAKind() bool {
 	ctr := 0
 	for i := 0; i < len(hand)-1; i++ {
 		if hand[i].Rank == hand[i+1].Rank {
-			for ; i < 4 && hand[i].Rank == hand[i+1].Rank; {
+			for i < 4 && hand[i].Rank == hand[i+1].Rank {
 				ctr = ctr + 1
 				i = i + 1
 			}
@@ -97,7 +97,7 @@ func (hand Hand) IsFourOfAKind() bool {
 
 func (hand Hand) IsFullHouse() bool {
 	variation := 0
-	for i := 0; i < len(hand) - 1; i++ {
+	for i := 0; i < len(hand)-1; i++ {
 		if hand[i].Rank != hand[i+1].Rank {
 			variation = variation + 1
 		}
@@ -105,7 +105,7 @@ func (hand Hand) IsFullHouse() bool {
 	if variation == 1 {
 		ctr := 0
 		i := 0
-		for ;hand[i].Rank == hand[i+1].Rank; {
+		for hand[i].Rank == hand[i+1].Rank {
 			ctr = ctr + 1
 			i = i + 1
 		}
@@ -123,7 +123,7 @@ func (hand Hand) IsThreeOfAKind() bool {
 	ctr := 1
 	for i := 0; i < len(hand)-1; i++ {
 		if hand[i].Rank == hand[i+1].Rank {
-			for ; i < 4 && hand[i].Rank == hand[i+1].Rank; {
+			for i < 4 && hand[i].Rank == hand[i+1].Rank {
 				ctr = ctr + 1
 				i = i + 1
 			}
@@ -139,7 +139,7 @@ func (hand Hand) IsThreeOfAKind() bool {
 
 func (hand Hand) IsTwoPairs() bool {
 	pairs := 0
-	for i := range []int{0,1,2} {
+	for i := range []int{0, 1, 2} {
 		if i < 3 && hand[i].Rank == hand[i+1].Rank && hand[i].Rank != hand[i+2].Rank {
 			pairs = pairs + 1
 		}
@@ -156,7 +156,7 @@ func (hand Hand) IsTwoPairs() bool {
 
 func (hand Hand) IsOnePair() bool {
 	pairs := 0
-	for i := range []int{0,1,2} {
+	for i := range []int{0, 1, 2} {
 		if i < 3 && hand[i].Rank == hand[i+1].Rank && hand[i].Rank != hand[i+2].Rank {
 			pairs = pairs + 1
 		}
@@ -180,7 +180,7 @@ func (hand Hand) Categorize() MadeHand {
 	}
 	if hand.IsFourOfAKind() {
 		madeHand := FourOfAKind{
-			Hand:         hand,
+			Hand: hand,
 		}
 		if hand[0] == hand[1] {
 			madeHand.FourCardRank = hand[0].Rank
