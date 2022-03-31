@@ -15,13 +15,7 @@ func main() {
 	cards1 := make([]models.Card, 0)
 	cards2 := make([]models.Card, 0)
 	for i, input := range cardsStr {
-		if len(input) != 2 {
-			panic(fmt.Sprintf("input 2 letters representing 1 card. invalid input: %s", input))
-		}
-		title := string(input[0])
-		suit := string(input[1])
-		card := models.Card{Title: title, Suit: suit}
-		err := card.Format()
+		card, err := models.InitCardFromString(input)
 		if err != nil {
 			panic(err)
 		}

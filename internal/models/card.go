@@ -13,11 +13,22 @@ type Card struct {
 	Rank  int      `json:"rank"`
 }
 
+func InitCardFromString(str string) (Card, error) {
+	if len(str) != 2 {
+		return Card{}, errors.New("card must have title and suit; invalid input: "+str)
+	}
+	card := Card{Title: string(str[0]), Suit: string(str[1])}
+	if err := card.format(); err != nil {
+		return Card{}, err
+	}
+	return card, nil
+}
+
 func (card Card) ToString() string {
 	return card.Title+card.Suit
 }
 
-func (card *Card) Format() error {
+func (card *Card) format() error {
 	card.Title = strings.ToUpper(card.Title)
 	card.Suit = strings.ToUpper(card.Suit)
 	var ok bool
