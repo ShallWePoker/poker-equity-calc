@@ -49,6 +49,6 @@ func main() {
 		hand = append(hand, card)
 	}
 	fmt.Printf("cards: %s\n", hand.ToString())
-	hand1 := utils.Seven2five(cards1)
+	hand1 := utils.Seven2fiveV2(cards1)
 	fmt.Printf("the biggest hand is %s\n", hand1.BoardCards().ToString())
 }
