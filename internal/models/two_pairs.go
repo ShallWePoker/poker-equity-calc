@@ -26,6 +26,7 @@ func (t TwoPairs) IsGreaterThan(madeHand MadeHand) bool {
 		madeHand.Category() == consts.FourOfAKind ||
 		madeHand.Category() == consts.FullHouse ||
 		madeHand.Category() == consts.Flush ||
+		madeHand.Category() == consts.Straight ||
 		madeHand.Category() == consts.ThreeOfAKind {
 		return false
 	} else if madeHand.Category() != consts.TwoPairs {

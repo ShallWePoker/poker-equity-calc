@@ -23,6 +23,7 @@ func (h HighCard) IsGreaterThan(madeHand MadeHand) bool {
 		madeHand.Category() == consts.FourOfAKind ||
 		madeHand.Category() == consts.FullHouse ||
 		madeHand.Category() == consts.Flush ||
+		madeHand.Category() == consts.Straight ||
 		madeHand.Category() == consts.ThreeOfAKind ||
 		madeHand.Category() == consts.TwoPairs ||
 		madeHand.Category() == consts.OnePair {
