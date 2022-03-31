@@ -66,7 +66,7 @@ func (hand Hand) IsFlush() bool {
 }
 
 func (hand Hand) IsStraight() bool {
-	return consts.Straights[hand.ToString()]
+	return consts.Straights[hand.ToRankString()]
 }
 
 func (hand Hand) IsStraightFlush() bool {
