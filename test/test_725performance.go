@@ -28,7 +28,7 @@ func main() {
 	}
 	endTime1 := time.Now().UnixNano()
 
-	fmt.Printf("[Seven2fiveV1] time spent calculating: %ds\n", endTime1-startTime1)
+	fmt.Printf("[Seven2fiveV1] time spent calculating: %dns\n", endTime1-startTime1)
 
 	startTime2 := time.Now().UnixNano()
 	for _, cards := range tList {
@@ -37,5 +37,5 @@ func main() {
 	}
 	endTime2 := time.Now().UnixNano()
 
-	fmt.Printf("[Seven2fiveV2] time spent calculating: %ds\n", endTime2-startTime2)
+	fmt.Printf("[Seven2fiveV2] time spent calculating: %dns\n", endTime2-startTime2)
 }
