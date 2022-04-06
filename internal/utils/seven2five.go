@@ -35,9 +35,6 @@ func Seven2fiveV3(rawCards []models.Card) models.MadeHand {
 			at1 := copy(cards, rawCards[0:i])
 			at2 := copy(cards[at1:], rawCards[i+1:j])
 			_ = copy(cards[at2:], rawCards[j+1:7])
-
-			// cards = append(rawCards[:i], rawCards[i+1:j]...)
-			// cards = append(cards, rawCards[j+1:]...)
 			hand, err := models.InitHand(cards)
 			if err != nil {
 				panic(err)

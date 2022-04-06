@@ -8,14 +8,14 @@ import (
 )
 
 type Card struct {
-	Title string   `json:"title"`
-	Suit  string   `json:"suit"`
-	Rank  int      `json:"rank"`
+	Title string `json:"title"`
+	Suit  string `json:"suit"`
+	Rank  int    `json:"rank"`
 }
 
 func InitCardFromString(str string) (Card, error) {
 	if len(str) != 2 {
-		return Card{}, errors.New("card must have title and suit; invalid input: "+str)
+		return Card{}, errors.New("card must have title and suit; invalid input: " + str)
 	}
 	card := Card{Title: string(str[0]), Suit: string(str[1])}
 	if err := card.format(); err != nil {
@@ -25,7 +25,11 @@ func InitCardFromString(str string) (Card, error) {
 }
 
 func (card Card) ToString() string {
-	return card.Title+card.Suit
+	return card.Title + card.Suit
+}
+
+func (card Card) ToStringValidSuits() string {
+	return card.Title + consts.SuitsValid[card.Suit]
 }
 
 func (card *Card) format() error {
