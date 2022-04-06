@@ -83,9 +83,12 @@ func (card *Card) format() error {
 	card.Suit = strings.ToUpper(card.Suit)
 	var ok bool
 	card.Rank, ok = ValidTitles[card.Title]
+	if !ok {
+		return errors.New(fmt.Sprintf("Invalid input card: %s ", card.Title))
+	}
 	card.Suit, ok = ValidSuits[card.Suit]
 	if !ok {
-		return errors.New(fmt.Sprintf("Invalid input card: %s or %s", card.Title, card.Suit))
+		return errors.New(fmt.Sprintf("Invalid input card: %s ", card.Suit))
 	}
 	return nil
 }
