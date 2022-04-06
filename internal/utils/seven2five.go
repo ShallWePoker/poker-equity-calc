@@ -34,7 +34,7 @@ func Seven2fiveV3(rawCards []models.Card) models.MadeHand {
 			cards := make([]models.Card, 5)
 			at1 := copy(cards, rawCards[0:i])
 			at2 := copy(cards[at1:], rawCards[i+1:j])
-			copy(cards[at2:], rawCards[j+1:7])
+			_ = copy(cards[at2:], rawCards[j+1:7])
 
 			// cards = append(rawCards[:i], rawCards[i+1:j]...)
 			// cards = append(cards, rawCards[j+1:]...)
