@@ -27,6 +27,29 @@ func Seven2five(rawCards []models.Card) models.MadeHand {
 	return FindBiggestMadeHand(MadeHandList)
 }
 
+func Seven2fiveV3(rawCards []models.Card) models.MadeHand {
+	var MadeHandList []models.MadeHand
+	for i := 0; i < 6; i++ {
+		for j := i + 1; j < 7; j++ {
+			cards := make([]models.Card, 5)
+			at1 := copy(cards, rawCards[0:i])
+			at2 := copy(cards[at1:], rawCards[i+1:j])
+			copy(cards[at2:], rawCards[j+1:7])
+
+			// cards = append(rawCards[:i], rawCards[i+1:j]...)
+			// cards = append(cards, rawCards[j+1:]...)
+			hand, err := models.InitHand(cards)
+			if err != nil {
+				panic(err)
+			}
+			// fmt.Println(hand.ToString())
+			madeHand := hand.Categorize()
+			MadeHandList = append(MadeHandList, madeHand)
+		}
+	}
+	return FindBiggestMadeHand(MadeHandList)
+}
+
 func elementIn(elem int, bound []int) bool {
 	for _, i := range bound {
 		if elem == i {
