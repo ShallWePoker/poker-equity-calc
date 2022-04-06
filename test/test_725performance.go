@@ -33,9 +33,9 @@ func main() {
 	startTime2 := time.Now().UnixNano()
 	for _, cards := range tList {
 		// fmt.Printf("[Seven2fiveV2] the biggest hand is %s\n", utils.Seven2fiveV2(cards).BoardCards().ToString())
-		utils.Seven2fiveV2(cards).BoardCards().ToString()
+		utils.Seven2fiveV3(cards).BoardCards().ToString()
 	}
 	endTime2 := time.Now().UnixNano()
 
-	fmt.Printf("[Seven2fiveV2] time spent calculating: %dns\n", endTime2-startTime2)
+	fmt.Printf("[Seven2fiveV3] time spent calculating: %dns\n", endTime2-startTime2)
 }
