@@ -44,7 +44,6 @@ func removeKthElement(s []models.Card, k int) []models.Card {
 	return s[:len(s)-1]
 }
 
-
 func GenerateRandomNCards(n int, removedCards []models.Card) ([]models.Card, error) {
 	if n < 1 || n > 7 {
 		return []models.Card{}, errors.New("n must be in [1, 7]")
@@ -54,11 +53,11 @@ func GenerateRandomNCards(n int, removedCards []models.Card) ([]models.Card, err
 		return []models.Card{}, err
 	}
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(cardsLeft), func (i, j int) {
+	rand.Shuffle(len(cardsLeft), func(i, j int) {
 		cardsLeft[i], cardsLeft[j] = cardsLeft[j], cardsLeft[i]
 	})
 	cards := make([]models.Card, 0)
-	for i := 0; i < n ; i++ {
+	for i := 0; i < n; i++ {
 		cards = append(cards, cardsLeft[i])
 	}
 	return cards, nil
@@ -70,7 +69,6 @@ func GenerateRandomNCardsV2(n int, removedCards []models.Card) ([]models.Card, e
 	}
 	rand.Seed(time.Now().UnixNano())
 
-	// cardsLeft := make([]string, 0)
 	cardsLeft, err := removeSpecifiedCards(removedCards)
 	if err != nil {
 		return []models.Card{}, err
@@ -79,7 +77,7 @@ func GenerateRandomNCardsV2(n int, removedCards []models.Card) ([]models.Card, e
 	for i := 0; i < n; i++ {
 		cards = append(cards, cardsLeft[rand.Intn(len(cardsLeft))])
 		cardsLeft = removeCardsFrom(cardsLeft, cardsLeft[rand.Intn(len(cardsLeft))])
-		// fmt.Println("card.ToStringValidSuits() : ", card.ToStringValidSuits())
+		// fmt.Println("card : ", cardsLeft[rand.Intn(len(cardsLeft))])
 		// fmt.Println("cardsLeft : ", cardsLeft)
 	}
 	return cards, nil

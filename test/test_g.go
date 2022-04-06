@@ -2,21 +2,20 @@ package main
 
 import (
 	"fmt"
+	"github.com/ShallWePoker/poker-equity-calc/internal/models"
 	"github.com/ShallWePoker/poker-equity-calc/internal/utils"
 	"time"
 )
 
 func main() {
-	var removedCards []string
-	n := 1000
-
-	// fmt.Printf("cards to remove: %v\n", removedCards)
-	// fmt.Printf("generate %d hands\n", n)
-
+	var removedCards []models.Card
+	n := 10
+	models.InitCardsEnums()
+	fmt.Printf("cards to remove: %v\n", removedCards)
+	fmt.Printf("generate %d hands\n", n)
 	start := time.Now()
 	for i := 0; i < n; i++ {
 		_, err := utils.GenerateRandomNCards(7, removedCards)
-		// cards, err := utils.GenerateRandomNCardsV2(7, removedCards)
 		if err != nil {
 			panic(err)
 		}

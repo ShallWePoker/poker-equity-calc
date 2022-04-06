@@ -3,6 +3,7 @@ package models
 import (
 	"errors"
 	"fmt"
+	"github.com/ShallWePoker/poker-equity-calc/internal/consts"
 	"strings"
 )
 
@@ -46,6 +47,7 @@ var cardsStrEnums = []string{
 }
 
 var cardsEnums = make([]Card, 0)
+
 func InitCardsEnums() {
 	for _, str := range cardsStrEnums {
 		card, _ := InitCardFromString(str)
