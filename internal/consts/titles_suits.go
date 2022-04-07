@@ -1,12 +1,5 @@
 package consts
 
-var ValidSuits = map[string]string{
-	"H": "❤",
-	"D": "♦",
-	"S": "♠",
-	"C": "♣",
-}
-
 var SuitsValid = map[string]string{
 	"❤": "H",
 	"♦": "D",
