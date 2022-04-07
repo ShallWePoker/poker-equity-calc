@@ -14,6 +14,10 @@ var SuitsValid = map[string]string{
 	"♣": "C",
 }
 
+var Suits = []string{
+	"H", "D", "S", "C",
+}
+
 var ValidTitles = map[string]int{
 	"2": 2,
 	"3": 3,
