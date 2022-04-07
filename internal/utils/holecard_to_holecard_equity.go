@@ -16,9 +16,9 @@ func HandVersusHandPreflopEquity(hand1 models.HoleCards, hand2 models.HoleCards)
 	if err != nil {
 		return hand1Equity, hand2Equity, err
 	}
-	var hand1Win float64 = 0
-	var hand2Win float64 = 0
-	tie := 0
+	hand1Win := float64(0)
+	hand2Win := float64(0)
+	tie := float64(0)
 	defaultSampleSize := 1000
 	defaultInspectSamplePerHandSize := 42
 	inspectSample := false
@@ -44,19 +44,21 @@ func HandVersusHandPreflopEquity(hand1 models.HoleCards, hand2 models.HoleCards)
 			}
 		} else {
 			tie += 1
-			hand1Win += 0.5
-			hand2Win += 0.5
 			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
 				fmt.Printf("hand1's %s ties hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
 			}
 		}
 	}
 	hand1WinRate := hand1Win / float64(defaultSampleSize)
+	hand1EquityRate := (hand1Win + tie/float64(2)) / float64(defaultSampleSize)
 	hand2WinRate := hand2Win / float64(defaultSampleSize)
-	tieRate := float64(tie) / float64(defaultSampleSize)
+	hand2EquityRate := (hand2Win + tie/float64(2)) / float64(defaultSampleSize)
+	tieRate := tie / float64(defaultSampleSize)
 	hand1Equity.WinRate = hand1WinRate
+	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
 	hand2Equity.WinRate = hand2WinRate
+	hand2Equity.Equity = hand2EquityRate
 	hand2Equity.TieRate = tieRate
 	return hand1Equity, hand2Equity, nil
 }
@@ -72,9 +74,9 @@ func HandVersusHandFlopEquity(hand1 models.HoleCards, hand2 models.HoleCards, fl
 	if err != nil {
 		return hand1Equity, hand2Equity, err
 	}
-	var hand1Win float64 = 0
-	var hand2Win float64 = 0
-	var tie float64 = 0
+	hand1Win := float64(0)
+	hand2Win := float64(0)
+	tie := float64(0)
 	defaultSampleSize := 1000
 	defaultInspectSamplePerHandSize := 42
 	inspectSample := false
@@ -103,19 +105,21 @@ func HandVersusHandFlopEquity(hand1 models.HoleCards, hand2 models.HoleCards, fl
 			}
 		} else {
 			tie += 1
-			hand1Win += 0.5
-			hand2Win += 0.5
 			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
 				fmt.Printf("hand1's %s ties hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
 			}
 		}
 	}
 	hand1WinRate := hand1Win / float64(defaultSampleSize)
+	hand1EquityRate := (hand1Win + tie/float64(2)) / float64(defaultSampleSize)
 	hand2WinRate := hand2Win / float64(defaultSampleSize)
+	hand2EquityRate := (hand2Win + tie/float64(2)) / float64(defaultSampleSize)
 	tieRate := tie / float64(defaultSampleSize)
 	hand1Equity.WinRate = hand1WinRate
+	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
 	hand2Equity.WinRate = hand2WinRate
+	hand2Equity.Equity = hand2EquityRate
 	hand2Equity.TieRate = tieRate
 	return hand1Equity, hand2Equity, nil
 }
@@ -164,19 +168,21 @@ func HandVersusHandTurnEquity(hand1 models.HoleCards, hand2 models.HoleCards, fl
 			}
 		} else {
 			tie += 1
-			hand1Win += 0.5
-			hand2Win += 0.5
 			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
 				fmt.Printf("hand1's %s ties hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
 			}
 		}
 	}
 	hand1WinRate := hand1Win / float64(defaultSampleSize)
+	hand1EquityRate := (hand1Win + tie/float64(2)) / float64(defaultSampleSize)
 	hand2WinRate := hand2Win / float64(defaultSampleSize)
+	hand2EquityRate := (hand2Win + tie/float64(2)) / float64(defaultSampleSize)
 	tieRate := tie / float64(defaultSampleSize)
 	hand1Equity.WinRate = hand1WinRate
+	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
 	hand2Equity.WinRate = hand2WinRate
+	hand2Equity.Equity = hand2EquityRate
 	hand2Equity.TieRate = tieRate
 	return hand1Equity, hand2Equity, nil
 }

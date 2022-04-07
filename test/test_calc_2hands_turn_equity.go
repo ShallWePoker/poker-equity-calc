@@ -62,7 +62,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	player1Equity, player2Equity, err := utils.HandVersusHandTurnEquity(player1HoleCards, player2HoleCards, flop, turnCard)
 	if err != nil {
 		panic(err)
@@ -70,9 +69,12 @@ func main() {
 
 
 	endTime := time.Now().Unix()
-	fmt.Printf("%v equity: %v\n", models.HoleCards(player1HoleCards).ToString(), player1Equity.WinRate)
-	fmt.Printf("%v equity: %v\n", models.HoleCards(player2HoleCards).ToString(), player2Equity.WinRate)
-	fmt.Printf("tie rate: %v\n", player1Equity.TieRate)
+	board, err := models.InitBoard(append(flop, turnCard))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("board: %s\n", board.ToString())
+	fmt.Printf("%s\n", player1Equity.ToString())
+	fmt.Printf("%s\n", player2Equity.ToString())
 	fmt.Printf("time spent calculating: %ds\n", endTime-startTime)
 }
-
