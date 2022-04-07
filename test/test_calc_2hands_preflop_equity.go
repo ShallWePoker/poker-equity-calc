@@ -47,8 +47,10 @@ func main() {
 
 
 	endTime := time.Now().Unix()
-	fmt.Printf("%v equity: %v\n", models.HoleCards(player1HoleCards).ToString(), player1Equity.WinRate)
-	fmt.Printf("%v equity: %v\n", models.HoleCards(player2HoleCards).ToString(), player2Equity.WinRate)
-	fmt.Printf("tie rate: %v\n", player1Equity.TieRate)
+
+	fmt.Printf("preflop\n")
+	fmt.Printf("%s\n", player1Equity.ToString())
+	fmt.Printf("%s\n", player2Equity.ToString())
+
 	fmt.Printf("time spent calculating: %ds\n", endTime-startTime)
 }
