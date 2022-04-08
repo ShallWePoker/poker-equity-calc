@@ -7,22 +7,22 @@ var SuitsValid = map[string]string{
 	"♣": "C",
 }
 
-var Suits = []string{
-	"H", "D", "S", "C",
+var MatrixCoordinateToTitle = map[int]string{
+	0:  "A",
+	1:  "K",
+	2:  "Q",
+	3:  "J",
+	4:  "T",
+	5:  "9",
+	6:  "8",
+	7:  "7",
+	8:  "6",
+	9:  "5",
+	10: "4",
+	11: "3",
+	12: "2",
 }
 
-var ValidTitles = map[string]int{
-	"2": 2,
-	"3": 3,
-	"4": 4,
-	"5": 5,
-	"6": 6,
-	"7": 7,
-	"8": 8,
-	"9": 9,
-	"T": 10,
-	"J": 11,
-	"Q": 12,
-	"K": 13,
-	"A": 14,
+var Suits = []string{
+	"H", "D", "S", "C",
 }
