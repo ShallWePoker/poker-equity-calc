@@ -11,19 +11,22 @@ type HoleCardRange struct {
 	Suited    bool
 }
 
-func InitHoleCardRange(titlePair string, suited bool) (HoleCardRange, error) {
+func InitHoleCardRange(titlePair string, suited bool) (holeCardRange HoleCardRange, err error) {
 	if len(titlePair) != 2 {
-		return HoleCardRange{}, errors.New("titlePair must have 2 str")
+		return HoleCardRange{}, errors.New(fmt.Sprintf("titlePair [%s] must have 2 letters", titlePair))
 	}
 	titlePair = strings.ToUpper(titlePair)
-	_, ok := ValidTitles[string(titlePair[0])]
+	rank0, ok := ValidTitles[string(titlePair[0])]
 	if !ok {
-		return HoleCardRange{}, errors.New(fmt.Sprintf("Invalid titlePair: %s ", string(titlePair[0])))
+		return HoleCardRange{}, errors.New(fmt.Sprintf("Invalid title letter: %s ", string(titlePair[0])))
 	}
-	_, ok = ValidTitles[string(titlePair[1])]
+	rank1, ok := ValidTitles[string(titlePair[1])]
 	if !ok {
-		return HoleCardRange{}, errors.New(fmt.Sprintf("Invalid titlePair: %s ", string(titlePair[1])))
+		return HoleCardRange{}, errors.New(fmt.Sprintf("Invalid title letter: %s ", string(titlePair[1])))
 	}
-	hcr := HoleCardRange{TitlePair: titlePair, Suited: suited}
-	return hcr, nil
+	if rank0 <= rank1 {
+		holeCardRange = HoleCardRange{TitlePair: string(titlePair[1])+string(titlePair[0]), Suited: suited}
+	}
+	holeCardRange = HoleCardRange{TitlePair: titlePair, Suited: suited}
+	return holeCardRange, nil
 }
