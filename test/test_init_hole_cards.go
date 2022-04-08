@@ -23,7 +23,7 @@ func main() {
 	player1HoleCards := make([]models.Card, 0)
 	player1HoleCards = append(player1HoleCards, player1HandCard1, player1HandCard2)
 
-	holeCards, err := models.InitHoleCards(player1HoleCards)
+	holeCards, err := models.InitHoleCard(player1HoleCards)
 	if err != nil {
 		panic(err)
 	}

@@ -6,9 +6,9 @@ import (
 	"github.com/ShallWePoker/poker-equity-calc/internal/models"
 )
 
-func HandVersusHandPreflopEquity(hand1 models.HoleCards, hand2 models.HoleCards) (hand1Equity models.HoleCardsEquity, hand2Equity models.HoleCardsEquity, err error) {
-	hand1Equity.HoleCards = hand1
-	hand2Equity.HoleCards = hand2
+func HandVersusHandPreflopEquity(hand1 models.HoleCard, hand2 models.HoleCard) (hand1Equity models.HoleCardEquity, hand2Equity models.HoleCardEquity, err error) {
+	hand1Equity.HoleCard = hand1
+	hand2Equity.HoleCard = hand2
 	cardsToRemoveFromDeck := make([]models.Card, 0)
 	cardsToRemoveFromDeck = append(cardsToRemoveFromDeck, hand1...)
 	cardsToRemoveFromDeck = append(cardsToRemoveFromDeck, hand2...)
@@ -63,9 +63,9 @@ func HandVersusHandPreflopEquity(hand1 models.HoleCards, hand2 models.HoleCards)
 	return hand1Equity, hand2Equity, nil
 }
 
-func HandVersusHandFlopEquity(hand1 models.HoleCards, hand2 models.HoleCards, flop models.Flop) (hand1Equity models.HoleCardsEquity, hand2Equity models.HoleCardsEquity, err error) {
-	hand1Equity.HoleCards = hand1
-	hand2Equity.HoleCards = hand2
+func HandVersusHandFlopEquity(hand1 models.HoleCard, hand2 models.HoleCard, flop models.Flop) (hand1Equity models.HoleCardEquity, hand2Equity models.HoleCardEquity, err error) {
+	hand1Equity.HoleCard = hand1
+	hand2Equity.HoleCard = hand2
 	cardsToRemoveFromDeck := make([]models.Card, 0)
 	cardsToRemoveFromDeck = append(cardsToRemoveFromDeck, hand1...)
 	cardsToRemoveFromDeck = append(cardsToRemoveFromDeck, hand2...)
@@ -124,9 +124,9 @@ func HandVersusHandFlopEquity(hand1 models.HoleCards, hand2 models.HoleCards, fl
 	return hand1Equity, hand2Equity, nil
 }
 
-func HandVersusHandTurnEquity(hand1 models.HoleCards, hand2 models.HoleCards, flop models.Flop, turn models.Card) (hand1Equity models.HoleCardsEquity, hand2Equity models.HoleCardsEquity, err error) {
-	hand1Equity.HoleCards = hand1
-	hand2Equity.HoleCards = hand2
+func HandVersusHandTurnEquity(hand1 models.HoleCard, hand2 models.HoleCard, flop models.Flop, turn models.Card) (hand1Equity models.HoleCardEquity, hand2Equity models.HoleCardEquity, err error) {
+	hand1Equity.HoleCard = hand1
+	hand2Equity.HoleCard = hand2
 	cardsToRemoveFromDeck := make([]models.Card, 0)
 	cardsToRemoveFromDeck = append(cardsToRemoveFromDeck, hand1...)
 	cardsToRemoveFromDeck = append(cardsToRemoveFromDeck, hand2...)
