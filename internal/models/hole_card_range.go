@@ -30,3 +30,14 @@ func InitHoleCardRange(titlePair string, suited bool) (holeCardRange HoleCardRan
 	holeCardRange = HoleCardRange{TitlePair: titlePair, Suited: suited}
 	return holeCardRange, nil
 }
+
+func (r HoleCardRange) ToString() string {
+	if r.TitlePair[0] == r.TitlePair[1] {
+		return r.TitlePair
+	}
+	if r.Suited {
+		return r.TitlePair+"s"
+	} else {
+		return r.TitlePair+"o"
+	}
+}
