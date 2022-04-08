@@ -22,3 +22,7 @@ var MatrixCoordinateToTitle = map[int]string{
 	11: "3",
 	12: "2",
 }
+
+var Suits = []string{
+	"H", "D", "S", "C",
+}
