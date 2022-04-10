@@ -35,7 +35,7 @@ func (hand Hand) ToString() string {
 	return strings.TrimSuffix(title, " ")
 }
 
-func (hand Hand) ToRankString() string {
+func (hand Hand) ToTitleString() string {
 	title := ""
 	for _, card := range hand {
 		title = title + card.Title
@@ -66,7 +66,7 @@ func (hand Hand) IsFlush() bool {
 }
 
 func (hand Hand) IsStraight() bool {
-	return consts.Straights[hand.ToRankString()]
+	return consts.Straights[hand.ToTitleString()]
 }
 
 func (hand Hand) IsStraightFlush() bool {
@@ -213,10 +213,10 @@ func (hand Hand) Categorize() MadeHand {
 
 	if !hand.IsFullHouse() && hand.IsThreeOfAKind() {
 		madeHand := ThreeOfAKind{Hand: hand, ThreeCardRank: hand[2].Rank}
-		if hand[0] == hand[1] {
+		if hand[0].Rank == hand[1].Rank {
 			madeHand.HighCardRank = hand[4].Rank
 			madeHand.LowCardRank = hand[3].Rank
-		} else if hand[1] == hand[2] {
+		} else if hand[1].Rank == hand[2].Rank {
 			madeHand.HighCardRank = hand[4].Rank
 			madeHand.LowCardRank = hand[0].Rank
 		} else {

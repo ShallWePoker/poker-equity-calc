@@ -1,6 +1,8 @@
 package models
 
-import "github.com/ShallWePoker/poker-equity-calc/internal/consts"
+import (
+	"github.com/ShallWePoker/poker-equity-calc/internal/consts"
+)
 
 type ThreeOfAKind struct {
 	Hand          Hand

@@ -3,6 +3,7 @@ package utils
 import (
 	"errors"
 	"fmt"
+	"github.com/ShallWePoker/poker-equity-calc/internal/consts"
 	"github.com/ShallWePoker/poker-equity-calc/internal/models"
 )
 
@@ -20,40 +21,11 @@ func HandVersusHandPreflopEquity(hand1 models.HoleCard, hand2 models.HoleCard) (
 	hand2Win := float64(0)
 	tie := float64(0)
 	defaultSampleSize := 1000
-	defaultInspectSamplePerHandSize := 42
-	inspectSample := false
-	for i := 0; i < defaultSampleSize; i++ {
-		generated5Cards, err := GenerateRandomNCards(5, cardsToRemoveFromDeck)
-		if err != nil {
-			return hand1Equity, hand2Equity, err
-		}
-		if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-			fmt.Printf("board is: %s\n", models.Hand(generated5Cards).ToString())
-		}
-		hand1BiggestMadeHand := Seven2five(append(generated5Cards, hand1...))
-		hand2BiggestMadeHand := Seven2five(append(generated5Cards, hand2...))
-		if hand1BiggestMadeHand.IsGreaterThan(hand2BiggestMadeHand) {
-			hand1Win += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s wins hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		} else if hand2BiggestMadeHand.IsGreaterThan(hand1BiggestMadeHand) {
-			hand2Win += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s loses hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		} else {
-			tie += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s ties hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		}
+	err = Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.PREFLOP, cardsToRemoveFromDeck, defaultSampleSize, true, nil, nil, nil)
+	if err != nil {
+		return hand1Equity, hand2Equity, err
 	}
-	hand1WinRate := hand1Win / float64(defaultSampleSize)
-	hand1EquityRate := (hand1Win + tie/float64(2)) / float64(defaultSampleSize)
-	hand2WinRate := hand2Win / float64(defaultSampleSize)
-	hand2EquityRate := (hand2Win + tie/float64(2)) / float64(defaultSampleSize)
-	tieRate := tie / float64(defaultSampleSize)
+	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
 	hand1Equity.WinRate = hand1WinRate
 	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
@@ -78,43 +50,11 @@ func HandVersusHandFlopEquity(hand1 models.HoleCard, hand2 models.HoleCard, flop
 	hand2Win := float64(0)
 	tie := float64(0)
 	defaultSampleSize := 1000
-	defaultInspectSamplePerHandSize := 42
-	inspectSample := false
-	for i := 0; i < defaultSampleSize; i++ {
-		generated2Cards, err := GenerateRandomNCards(2, cardsToRemoveFromDeck)
-		if err != nil {
-			return hand1Equity, hand2Equity, err
-		}
-		board := make([]models.Card, 0)
-		board = append(board, flop...)
-		board = append(board, generated2Cards...)
-		if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-			fmt.Printf("board is: %s\n", models.Hand(board).ToString())
-		}
-		hand1BiggestMadeHand := Seven2five(append(board, hand1...))
-		hand2BiggestMadeHand := Seven2five(append(board, hand2...))
-		if hand1BiggestMadeHand.IsGreaterThan(hand2BiggestMadeHand) {
-			hand1Win += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s wins hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		} else if hand2BiggestMadeHand.IsGreaterThan(hand1BiggestMadeHand) {
-			hand2Win += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s loses hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		} else {
-			tie += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s ties hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		}
+	err = Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.FLOP, cardsToRemoveFromDeck, defaultSampleSize, true, &flop, nil, nil)
+	if err != nil {
+		return hand1Equity, hand2Equity, err
 	}
-	hand1WinRate := hand1Win / float64(defaultSampleSize)
-	hand1EquityRate := (hand1Win + tie/float64(2)) / float64(defaultSampleSize)
-	hand2WinRate := hand2Win / float64(defaultSampleSize)
-	hand2EquityRate := (hand2Win + tie/float64(2)) / float64(defaultSampleSize)
-	tieRate := tie / float64(defaultSampleSize)
+	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
 	hand1Equity.WinRate = hand1WinRate
 	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
@@ -140,44 +80,11 @@ func HandVersusHandTurnEquity(hand1 models.HoleCard, hand2 models.HoleCard, flop
 	hand2Win := float64(0)
 	tie := float64(0)
 	defaultSampleSize := 1000
-	defaultInspectSamplePerHandSize := 42
-	inspectSample := false
-	for i := 0; i < defaultSampleSize; i++ {
-		generated1Card, err := GenerateRandomNCards(1, cardsToRemoveFromDeck)
-		if err != nil {
-			return hand1Equity, hand2Equity, err
-		}
-		board := make([]models.Card, 0)
-		board = append(board, flop...)
-		board = append(board, turn)
-		board = append(board, generated1Card...)
-		if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-			fmt.Printf("board is: %s\n", models.Hand(board).ToString())
-		}
-		hand1BiggestMadeHand := Seven2five(append(board, hand1...))
-		hand2BiggestMadeHand := Seven2five(append(board, hand2...))
-		if hand1BiggestMadeHand.IsGreaterThan(hand2BiggestMadeHand) {
-			hand1Win += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s wins hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		} else if hand2BiggestMadeHand.IsGreaterThan(hand1BiggestMadeHand) {
-			hand2Win += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s loses hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		} else {
-			tie += 1
-			if (inspectSample) && (defaultInspectSamplePerHandSize != 0) && (i%defaultInspectSamplePerHandSize == 0) {
-				fmt.Printf("hand1's %s ties hand2's %s\n\n", hand1BiggestMadeHand.ToString(), hand2BiggestMadeHand.ToString())
-			}
-		}
+	err = Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.TURN, cardsToRemoveFromDeck, defaultSampleSize, true, &flop, &turn, nil)
+	if err != nil {
+		return hand1Equity, hand2Equity, err
 	}
-	hand1WinRate := hand1Win / float64(defaultSampleSize)
-	hand1EquityRate := (hand1Win + tie/float64(2)) / float64(defaultSampleSize)
-	hand2WinRate := hand2Win / float64(defaultSampleSize)
-	hand2EquityRate := (hand2Win + tie/float64(2)) / float64(defaultSampleSize)
-	tieRate := tie / float64(defaultSampleSize)
+	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
 	hand1Equity.WinRate = hand1WinRate
 	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate

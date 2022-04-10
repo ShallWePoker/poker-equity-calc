@@ -2,7 +2,6 @@ package models
 
 import (
 	"github.com/ShallWePoker/poker-equity-calc/internal/consts"
-	"strconv"
 )
 
 type Flush struct {
@@ -30,8 +29,8 @@ func (f Flush) IsGreaterThan(madeHand MadeHand) bool {
 		return true
 	} else {
 		anotherHand := madeHand.(Flush)
-		fValue, _ := strconv.Atoi(f.Hand.ToRankString())
-		aValue, _ := strconv.Atoi(anotherHand.Hand.ToRankString())
+		fValue := f.Hand[4].Rank*10000+f.Hand[3].Rank*1000+f.Hand[2].Rank*100+f.Hand[1].Rank*10+f.Hand[0].Rank
+		aValue := anotherHand.Hand[4].Rank*10000+anotherHand.Hand[3].Rank*1000+anotherHand.Hand[2].Rank*100+anotherHand.Hand[1].Rank*10+anotherHand.Hand[0].Rank
 		return fValue - aValue > 0
 	}
 }
