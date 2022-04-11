@@ -8,6 +8,8 @@ type FourOfAKind struct {
 	OneCardRank  int
 }
 
+var _ MadeHand = (*FourOfAKind)(nil)
+
 func (f FourOfAKind) ToString() string {
 	return f.Hand.ToString()
 }
@@ -28,9 +30,9 @@ func (f FourOfAKind) IsGreaterThan(madeHand MadeHand) bool {
 	} else {
 		anotherHand := madeHand.(FourOfAKind)
 		if f.FourCardRank != anotherHand.FourCardRank {
-			return f.FourCardRank - anotherHand.FourCardRank > 0
+			return f.FourCardRank-anotherHand.FourCardRank > 0
 		} else {
-			return f.OneCardRank - anotherHand.OneCardRank > 0
+			return f.OneCardRank-anotherHand.OneCardRank > 0
 		}
 	}
 }
