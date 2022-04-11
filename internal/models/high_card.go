@@ -6,6 +6,8 @@ type HighCard struct {
 	Hand Hand
 }
 
+var _ MadeHand = (*HighCard)(nil)
+
 func (h HighCard) ToString() string {
 	return h.Hand.ToString()
 }
@@ -30,8 +32,8 @@ func (h HighCard) IsGreaterThan(madeHand MadeHand) bool {
 		return false
 	} else {
 		anotherHand := madeHand.(HighCard)
-		hValue := h.Hand[4].Rank*10000+h.Hand[3].Rank*1000+h.Hand[2].Rank*100+h.Hand[1].Rank*10+h.Hand[0].Rank
-		aValue := anotherHand.Hand[4].Rank*10000+anotherHand.Hand[3].Rank*1000+anotherHand.Hand[2].Rank*100+anotherHand.Hand[1].Rank*10+anotherHand.Hand[0].Rank
-		return hValue - aValue > 0
+		hValue := h.Hand[4].Rank*10000 + h.Hand[3].Rank*1000 + h.Hand[2].Rank*100 + h.Hand[1].Rank*10 + h.Hand[0].Rank
+		aValue := anotherHand.Hand[4].Rank*10000 + anotherHand.Hand[3].Rank*1000 + anotherHand.Hand[2].Rank*100 + anotherHand.Hand[1].Rank*10 + anotherHand.Hand[0].Rank
+		return hValue-aValue > 0
 	}
 }

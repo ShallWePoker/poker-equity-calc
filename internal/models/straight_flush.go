@@ -6,6 +6,8 @@ type StraightFlush struct {
 	Hand Hand
 }
 
+var _ MadeHand = (*StraightFlush)(nil)
+
 func (sf StraightFlush) ToString() string {
 	return sf.Hand.ToString()
 }
@@ -24,8 +26,8 @@ func (sf StraightFlush) IsGreaterThan(madeHand MadeHand) bool {
 	} else {
 		anotherHand := madeHand.(StraightFlush)
 		if sf.Hand[4].Rank == 14 || anotherHand.Hand[4].Rank == 14 {
-			return sf.Hand[0].Rank - anotherHand.Hand[0].Rank > 0
+			return sf.Hand[0].Rank-anotherHand.Hand[0].Rank > 0
 		}
-		return sf.Hand[4].Rank - anotherHand.Hand[4].Rank > 0
+		return sf.Hand[4].Rank-anotherHand.Hand[4].Rank > 0
 	}
 }

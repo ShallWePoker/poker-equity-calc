@@ -8,6 +8,8 @@ type FullHouse struct {
 	TwoCardRank   int
 }
 
+var _ MadeHand = (*FullHouse)(nil)
+
 func (f FullHouse) ToString() string {
 	return f.Hand.ToString()
 }
@@ -28,9 +30,9 @@ func (f FullHouse) IsGreaterThan(madeHand MadeHand) bool {
 	} else {
 		anotherHand := madeHand.(FullHouse)
 		if f.ThreeCardRank != anotherHand.ThreeCardRank {
-			return f.ThreeCardRank - anotherHand.ThreeCardRank > 0
+			return f.ThreeCardRank-anotherHand.ThreeCardRank > 0
 		} else {
-			return f.TwoCardRank - anotherHand.TwoCardRank > 0
+			return f.TwoCardRank-anotherHand.TwoCardRank > 0
 		}
 	}
 }
