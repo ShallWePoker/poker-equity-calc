@@ -6,6 +6,8 @@ type Straight struct {
 	Hand Hand
 }
 
+var _ MadeHand = (*Straight)(nil)
+
 func (s Straight) ToString() string {
 	return s.Hand.ToString()
 }
@@ -29,9 +31,9 @@ func (s Straight) IsGreaterThan(madeHand MadeHand) bool {
 	} else {
 		anotherHand := madeHand.(Straight)
 		if s.Hand[4].Rank == 14 || anotherHand.Hand[4].Rank == 14 {
-			return s.Hand[0].Rank - anotherHand.Hand[0].Rank > 0
+			return s.Hand[0].Rank-anotherHand.Hand[0].Rank > 0
 		}
-		return s.Hand[4].Rank - anotherHand.Hand[4].Rank > 0
+		return s.Hand[4].Rank-anotherHand.Hand[4].Rank > 0
 	}
 
 }

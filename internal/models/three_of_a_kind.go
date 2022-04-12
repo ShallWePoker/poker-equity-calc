@@ -11,6 +11,8 @@ type ThreeOfAKind struct {
 	LowCardRank   int
 }
 
+var _ MadeHand = (*ThreeOfAKind)(nil)
+
 func (t ThreeOfAKind) ToString() string {
 	return t.Hand.ToString()
 }
@@ -35,11 +37,11 @@ func (t ThreeOfAKind) IsGreaterThan(madeHand MadeHand) bool {
 	} else {
 		anotherHand := madeHand.(ThreeOfAKind)
 		if t.ThreeCardRank != anotherHand.ThreeCardRank {
-			return t.ThreeCardRank - anotherHand.ThreeCardRank > 0
+			return t.ThreeCardRank-anotherHand.ThreeCardRank > 0
 		} else {
-			tValue := t.HighCardRank*10+t.LowCardRank
-			aValue := anotherHand.HighCardRank*10+anotherHand.LowCardRank
-			return tValue- aValue > 0
+			tValue := t.HighCardRank*10 + t.LowCardRank
+			aValue := anotherHand.HighCardRank*10 + anotherHand.LowCardRank
+			return tValue-aValue > 0
 		}
 	}
 }

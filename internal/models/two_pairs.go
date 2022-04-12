@@ -9,6 +9,8 @@ type TwoPairs struct {
 	SingleCardRank  int
 }
 
+var _ MadeHand = (*TwoPairs)(nil)
+
 func (t TwoPairs) ToString() string {
 	return t.Hand.ToString()
 }
@@ -33,9 +35,8 @@ func (t TwoPairs) IsGreaterThan(madeHand MadeHand) bool {
 		return true
 	} else {
 		anotherHand := madeHand.(TwoPairs)
-		tValue := t.HighTwoCardRank*100+t.LowTwoCardRank*10+t.SingleCardRank
-		aValue := anotherHand.HighTwoCardRank*100+anotherHand.LowTwoCardRank*10+anotherHand.SingleCardRank
-		return tValue - aValue > 0
+		tValue := t.HighTwoCardRank*100 + t.LowTwoCardRank*10 + t.SingleCardRank
+		aValue := anotherHand.HighTwoCardRank*100 + anotherHand.LowTwoCardRank*10 + anotherHand.SingleCardRank
+		return tValue-aValue > 0
 	}
 }
-

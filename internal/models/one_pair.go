@@ -10,6 +10,8 @@ type OnePair struct {
 	HighCardRank int
 }
 
+var _ MadeHand = (*OnePair)(nil)
+
 func (o OnePair) ToString() string {
 	return o.Hand.ToString()
 }
@@ -35,8 +37,8 @@ func (o OnePair) IsGreaterThan(madeHand MadeHand) bool {
 		return true
 	} else {
 		anotherHand := madeHand.(OnePair)
-		oValue := o.PairCardRank*1000+o.HighCardRank*100+o.MidCardRank*10+o.LowCardRank
-		aValue := anotherHand.PairCardRank*1000+anotherHand.HighCardRank*100+anotherHand.MidCardRank*10+anotherHand.LowCardRank
-		return oValue - aValue > 0
+		oValue := o.PairCardRank*1000 + o.HighCardRank*100 + o.MidCardRank*10 + o.LowCardRank
+		aValue := anotherHand.PairCardRank*1000 + anotherHand.HighCardRank*100 + anotherHand.MidCardRank*10 + anotherHand.LowCardRank
+		return oValue-aValue > 0
 	}
 }
