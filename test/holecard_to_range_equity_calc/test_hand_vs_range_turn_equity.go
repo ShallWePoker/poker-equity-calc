@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/ShallWePoker/poker-equity-calc/internal/equity_calc"
 	"github.com/ShallWePoker/poker-equity-calc/internal/models"
-	"github.com/ShallWePoker/poker-equity-calc/internal/utils"
 	"strings"
 	"time"
 )
@@ -66,7 +66,7 @@ func main()  {
 	}
 
 	fmt.Printf("\n")
-	player1Equity, player2Equity, err := utils.HoleCardVersusRangeTurnEquity(player1HoleCards, player2Rge, flop, turnCard)
+	player1Equity, player2Equity, err := equity_calc.HoleCardVersusBalancedRangeTurnEquity(player1HoleCards, player2Rge, flop, turnCard)
 	if err != nil {
 		panic(err)
 	}

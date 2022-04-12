@@ -1,10 +1,11 @@
-package utils
+package equity_calc
 
 import (
 	"errors"
 	"fmt"
 	"github.com/ShallWePoker/poker-equity-calc/internal/consts"
 	"github.com/ShallWePoker/poker-equity-calc/internal/models"
+	"github.com/ShallWePoker/poker-equity-calc/internal/utils"
 )
 
 func HandVersusHandPreflopEquity(hand1 models.HoleCard, hand2 models.HoleCard) (hand1Equity models.HoleCardEquity, hand2Equity models.HoleCardEquity, err error) {
@@ -21,11 +22,11 @@ func HandVersusHandPreflopEquity(hand1 models.HoleCard, hand2 models.HoleCard) (
 	hand2Win := float64(0)
 	tie := float64(0)
 	defaultSampleSize := 1000
-	err = Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.PREFLOP, cardsToRemoveFromDeck, defaultSampleSize, true, nil, nil, nil)
+	err = utils.Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.PREFLOP, cardsToRemoveFromDeck, defaultSampleSize, true, nil, nil, nil)
 	if err != nil {
 		return hand1Equity, hand2Equity, err
 	}
-	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
+	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := utils.Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
 	hand1Equity.WinRate = hand1WinRate
 	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
@@ -50,11 +51,11 @@ func HandVersusHandFlopEquity(hand1 models.HoleCard, hand2 models.HoleCard, flop
 	hand2Win := float64(0)
 	tie := float64(0)
 	defaultSampleSize := 1000
-	err = Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.FLOP, cardsToRemoveFromDeck, defaultSampleSize, true, &flop, nil, nil)
+	err = utils.Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.FLOP, cardsToRemoveFromDeck, defaultSampleSize, true, &flop, nil, nil)
 	if err != nil {
 		return hand1Equity, hand2Equity, err
 	}
-	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
+	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := utils.Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
 	hand1Equity.WinRate = hand1WinRate
 	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate
@@ -80,11 +81,11 @@ func HandVersusHandTurnEquity(hand1 models.HoleCard, hand2 models.HoleCard, flop
 	hand2Win := float64(0)
 	tie := float64(0)
 	defaultSampleSize := 1000
-	err = Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.TURN, cardsToRemoveFromDeck, defaultSampleSize, true, &flop, &turn, nil)
+	err = utils.Hand2HandCountWinAndTie(hand1, hand2, &hand1Win, &hand2Win, &tie, consts.TURN, cardsToRemoveFromDeck, defaultSampleSize, true, &flop, &turn, nil)
 	if err != nil {
 		return hand1Equity, hand2Equity, err
 	}
-	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
+	hand1WinRate, hand1EquityRate, hand2WinRate, hand2EquityRate, tieRate := utils.Hand2HandRateCalc(hand1Win, hand2Win, tie, float64(defaultSampleSize))
 	hand1Equity.WinRate = hand1WinRate
 	hand1Equity.Equity = hand1EquityRate
 	hand1Equity.TieRate = tieRate

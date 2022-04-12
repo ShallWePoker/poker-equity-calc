@@ -25,7 +25,7 @@ func InitHoleCardRange(titlePair string, suited bool) (holeCardRange HoleCardRan
 		return HoleCardRange{}, errors.New(fmt.Sprintf("Invalid title letter: %s ", string(titlePair[1])))
 	}
 	if rank0 <= rank1 {
-		holeCardRange = HoleCardRange{TitlePair: string(titlePair[1])+string(titlePair[0]), Suited: suited}
+		holeCardRange = HoleCardRange{TitlePair: string(titlePair[1]) + string(titlePair[0]), Suited: suited}
 	}
 	holeCardRange = HoleCardRange{TitlePair: titlePair, Suited: suited}
 	return holeCardRange, nil
@@ -36,8 +36,26 @@ func (r HoleCardRange) ToString() string {
 		return r.TitlePair
 	}
 	if r.Suited {
-		return r.TitlePair+"s"
+		return r.TitlePair + "s"
 	} else {
-		return r.TitlePair+"o"
+		return r.TitlePair + "o"
 	}
+}
+
+type UnbalancedHolecardRange struct {
+	HolecardRanges []HoleCardRange
+	Percentage     float64
+}
+
+type UnbalancedHolecardRanges []UnbalancedHolecardRange
+
+func (u UnbalancedHolecardRanges) ToString() string {
+	str := ""
+	for _, ubRange := range u {
+		for _, ubRangePart := range ubRange.HolecardRanges {
+			str = str + fmt.Sprintf("%s ", ubRangePart.ToString())
+		}
+		str = str + fmt.Sprintf("%0.2f%%;", ubRange.Percentage*float64(100))
+	}
+	return str
 }
